@@ -1,12 +1,11 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
+export const connect = (url) => {
+  return mongoose
+    .connect(url)
+    .then(() => {
+      console.log("Connect db successfully");
+    })
+    .catch((e) => console.log(e));
+};
 
-export const connect = async () => {
-    try {
-        const conn = await mongoose.Connect(process.env.MONGO_URI);
-        console.log(`Mongoose Connected: ${conn.connection.host}`);
-
-    } catch (error){
-
-    }
-}
