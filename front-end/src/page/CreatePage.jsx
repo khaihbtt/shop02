@@ -1,4 +1,4 @@
-import { Box, Button, Container, Heading, Input, useColorModeValue, VStack } from '@chakra-ui/react';
+import { Box, Button, Container, Heading, Input, useColorModeValue, useToast, VStack } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useProductStore } from '../store/product';
 
@@ -10,16 +10,32 @@ const CreatePage = () => {
   });
 
   // Lấy hàm createProduct từ zustand store
+  const toast = useToast()
   const { createProduct } = useProductStore();
 
   // Hàm xử lý khi nhấn nút Add Product
   const handleAddProduct = async () => {
     // Gọi hàm createProduct và nhận kết quả trả về
     const { success, message } = await createProduct(newProduct);
-    
+    if (!success) {
+      toast({
+        title: "error",
+        description: message,
+        status: "error",
+        isClosable: true,
+
+      })
+    } else {
+      toast({
+        title: "success",
+        description: message,
+        status: "success",
+        isClosable: true,
+
+      })
+    }
     // In kết quả ra console
-    console.log("Success:", success);
-    console.log("Message:", message);
+    setNewProduct({name: "", price: "", image: ""})
   };
 
   return (

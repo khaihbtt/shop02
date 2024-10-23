@@ -11,10 +11,10 @@ export const useProductStore = create((set) => ({
 
     try {
       // Gửi yêu cầu POST đến server
-      const res = await fetch("/api/products", {
+      const res = await fetch("/products", {
         method: "POST",
         headers: {
-          "content-type": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(newProduct),
       });
@@ -39,4 +39,9 @@ export const useProductStore = create((set) => ({
       return { success: false, message: error.message };
     }
   },
+  fetchProducts: async () => {
+    const  res = await fetch("/products")
+    const  data = await res.json();
+    set({products: data.data})
+  }
 }));
